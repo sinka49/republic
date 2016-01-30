@@ -22,7 +22,7 @@ class ListviewController extends Controller
      */
     public function index()
     {
-        $resultDBArray = Place::select('place_id', 'place_name','place_city')->take(50)->orderBy('views')->get();
+        $resultDBArray = Place::select('place_id', 'place_name','place_city')->where('cat_for_app_id','!=', '4')->take(50)->orderBy('views')->get();
         if (count($resultDBArray)>0) {
             $resultJSON["success"] = "1";
             $resultJSON["items"] = $resultDBArray;
