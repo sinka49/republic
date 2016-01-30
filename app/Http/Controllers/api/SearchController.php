@@ -21,7 +21,10 @@ class SearchController extends Controller
     public function index($variable_search)
     {
         $variable_search = urldecode($variable_search);
-        $resultDBArray = Place::select('place_id', 'place_name','place_city')->where('place_name','like', '%'+$variable_search+'%')->orderBy('views')->get();
+        $resultDBArray = Place::select('place_id', 'place_name','place_city')->whereRaw(
+        "MATCH(place_name) AGAINST(? IN BOOLEAN MODE)",
+        array($variable_search)
+    )->orderBy('views')->get();
         if (count($resultDBArray)>0) {
             $resultJSON["success"] = "1";
             $resultJSON["items"] = $resultDBArray;

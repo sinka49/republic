@@ -33,10 +33,11 @@ class Place extends Model
     }
     public function location()
     {
-        return $this->belongsTo('republic\Location','place_id', 'place_id');
+        return $this->hasOne('republic\Location','place_id', 'place_id');
     }
     public function images()
     {
         return $this->hasMany('republic\Image','place_id', 'place_id');
     }
+
 }

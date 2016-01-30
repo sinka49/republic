@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use republic\Http\Requests;
 use republic\Http\Controllers\Controller;
+use republic\Rest;
+use republic\City;
 
 class PostController extends Controller
 {
@@ -16,7 +18,12 @@ class PostController extends Controller
      */
     public function index()
     {
-       return view('posts.index');
+        $cities = City::select('city_name')->distinct()->get();
+        $rests  = Rest::select('rest_type')->distinct()->get();
+        $content['cities'] =  $cities;
+        $content['rests'] =  $rests;
+        return view('index', $content);
+
     }
 
     /**

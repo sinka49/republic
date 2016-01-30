@@ -11,7 +11,7 @@ use republic\Image;
 use republic\City;
 use republic\Rest;
 use republic\RelationRP;
-use republic\Cat_for_app;
+
 
 class ListviewController extends Controller
 {
@@ -22,7 +22,7 @@ class ListviewController extends Controller
      */
     public function index()
     {
-        $resultDBArray = Place::select('place_id', 'place_name','place_city')->where('cat_for_app_id','!=', '4')->take(50)->orderBy('views')->get();
+        $resultDBArray = Place::select('place_id', 'place_name','place_city')->with('location')->take(50)->orderBy('views')->get();
         if (count($resultDBArray)>0) {
             $resultJSON["success"] = "1";
             $resultJSON["items"] = $resultDBArray;
@@ -81,20 +81,20 @@ class ListviewController extends Controller
         $city != null ? $cityId = $this->getCityId($city) : $cityId = null;
 
         if($arrayPlaceId != null && $cityId != null){
-            if($catForApp != null) $resultDBArray = Place::select('place_id', 'place_name', 'place_city','picture')->wheren('place_id', $arrayPlaceId)->where('cat_for_app_id', $catForApp)->where('place_city', $cityId)->orderBy('views')->get();
-            else $resultDBArray = Place::select('place_id', 'place_name', 'place_city','picture')->whereIn('place_id', $arrayPlaceId)->where('place_city', $cityId)->orderBy('views')->get();
+            if($catForApp != null) $resultDBArray = Place::select('place_id', 'place_name', 'place_city','picture')->whereIn('place_id', $arrayPlaceId)->where('cat_for_app_id', $catForApp)->with('location')->where('place_city', $cityId)->orderBy('views')->get();
+            else $resultDBArray = Place::select('place_id', 'place_name', 'place_city','picture')->whereIn('place_id', $arrayPlaceId)->with('location')->where('place_city', $cityId)->orderBy('views')->get();
         }
         else if($arrayPlaceId != null && $cityId == null){
-            if($catForApp != null) $resultDBArray = Place::select('place_id', 'place_name', 'place_city','picture')->where('cat_for_app_id', $catForApp)->whereIn('place_id', $arrayPlaceId)->orderBy('views')->get();
-            else $resultDBArray = Place::select('place_id', 'place_name', 'place_city','picture')->whereIn('place_id', $arrayPlaceId)->orderBy('views')->get();
+            if($catForApp != null) $resultDBArray = Place::select('place_id', 'place_name', 'place_city','picture')->where('cat_for_app_id', $catForApp)->with('location')->whereIn('place_id', $arrayPlaceId)->orderBy('views')->get();
+            else $resultDBArray = Place::select('place_id', 'place_name', 'place_city','picture')->whereIn('place_id', $arrayPlaceId)->orderBy('views')->with('location')->get();
         }
         else if($arrayPlaceId == null && $cityId != null){
-            if($catForApp != null) $resultDBArray = Place::select('place_id', 'place_name', 'place_city','picture')->where('cat_for_app_id', $catForApp)->where('place_city', $cityId)->orderBy('views')->get();
+            if($catForApp != null) $resultDBArray = Place::select('place_id', 'place_name', 'place_city','picture')->where('cat_for_app_id', $catForApp)->with('location')->where('place_city', $cityId)->orderBy('views')->get();
             else $resultDBArray = Place::select('place_id', 'place_name', 'place_city','picture')->where('place_city', $cityId)->orderBy('views')->get();
         }
         else{
-            if($catForApp != null) $resultDBArray = Place::select('place_id', 'place_name', 'place_city','picture')->where('cat_for_app_id', $catForApp)->orderBy('views')->get();
-            else $resultDBArray = Place::select('place_id', 'place_name', 'place_city','picture')->orderBy('views')->get();
+            if($catForApp != null) $resultDBArray = Place::select('place_id', 'place_name', 'place_city','picture')->where('cat_for_app_id', $catForApp)->with('location')->orderBy('views')->get();
+            else $resultDBArray = Place::select('place_id', 'place_name', 'place_city','picture')->with('location')->orderBy('views')->get();
         }
 
 
@@ -108,6 +108,7 @@ class ListviewController extends Controller
                  $city_nameArray = $this->getCityName($city_id);
                  $resultJSON["items"][$i]['place_city'] = $city_nameArray['city_name'];
                  $resultJSON["items"][$i]['images'] = $resultDBImages;
+
             }
         }
         else  $resultJSON["success"] = "0";
