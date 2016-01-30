@@ -1,0 +1,1 @@
+c:\xampp\php\php.exe -r "readfile('https://getcomposer.org/installer');" | c:\xampp\php\php.exe

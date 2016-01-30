@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: republic
+        psr4_prefix: republic
+        src_path: app
