@@ -348,6 +348,7 @@ span.logoTyapLyap{
 	display: flex;
 	width: 100%;
 	flex-grow: 1;
+	position: relative;
 }
 
 .mainmenu li.special{
@@ -356,7 +357,33 @@ span.logoTyapLyap{
 .mainmenu li.special:hover{
 	background: rgba(249, 2, 0, 1);
 }
-
+.filter .submit, .filters .submit {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-moz-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	-moz-box-pack: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	width: 100%;
+	font: 300 15px 'Intro', Arial, sans-serif;
+	color: #fff;
+	text-align: center;
+	text-transform: uppercase;
+	background: #bc2928;
+	border: none;
+	border-radius: 2px;
+	padding: 9px 0;
+	cursor: pointer;
+}
 /* ÕÀÊÈ */
 
 .inside .content > ymaps{
@@ -365,10 +392,20 @@ span.logoTyapLyap{
 ymaps.ymaps-2-1-34-svg-icon{
 	width: 354px !important;
 	height: 313px !important;
-	background: url(../img/marker.png) center center no-repeat !important;
+	background: url('../images/marker.png') center center no-repeat !important;
 	left: -150px !important;
 	top: -320px !important;
 }
 #info{
 	display: none;
+}
+#tittle {
+	position: absolute;
+	z-index: 55;
+	top: 50px;
+	background-color: rgba(65, 68, 97, 0.87);
+	padding: 10px 20px;
+	color: white;
+	font: 300 14px 'Intro', Arial, sans-serif;
+	text-transform: uppercase;
 }

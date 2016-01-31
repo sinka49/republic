@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="<?=asset('css/jquery.formstyler.css')?>" />
     <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
     <script src="<?=asset('js/jquery.min.js')?>"></script>
+    <script src="<?=asset('js/jquery.formstyler.min.js')?>"></script>
 </head>
 
 <body class="inside">
@@ -35,41 +36,34 @@
 <div id="info">{{$JSONarray}}</div>
     <div class="filters">
         <form action="#">
+            <h1>Фильтровать</h1>
             <select name="typerest" id="typerest">
-                <option>Активный отдых</option>
-                <option>Культурный отдых</option>
-                <option>Семейный отдых</option>
-            </select>
-            <select name="town" id="town">
-                <option>Махачкала</option>
-                <option>Иерусалим</option>
-                <option>Бишкек</option>
-                <option>Душанбе</option>
-                <option>Шанхай</option>
-                <option>Каракас</option>
-                <option>Тлярата</option>
+                @foreach ($rests as $rest)
+                    <option>{{$rest->rest_type}}</option>
+                @endforeach
             </select>
 
             <select name="town" id="town">
-                <option>Ещё!</option>
-                <option>Иерусалим</option>
-                <option>Бишкек</option>
-                <option>Душанбе</option>
-                <option>Шанхай</option>
-                <option>Каракас</option>
-                <option>Тлярата</option>
+                @foreach ($cities as $city)
+                    <option>{{$city->city_name}}</option>
+                @endforeach
             </select>
-            <button class="submit"><img src="images/search.png">Искать</button>
+            <label><input type="checkbox" name="check1"/>{{$check['0']}}</label>
+            <label><input type="checkbox" name="check2"/> {{$check['1']}}</label>
+            <label><input type="checkbox" name="check3"/> {{$check['2']}}</label>
+            <button class="submit"><img src="http://republic.tk/images/search.png">Искать</button>
         </form>
     </div>
 
     <div class="content">
+        <div id="tittle">{{$success}}</div>
         <div id="map" style=" width: 100%; height: 800px;"></div>
     </div>
 
 </main>
 
-<script src="<?=asset('js/jquery.formstyler.min.js')?>"></script>
+
+
 <script type="text/javascript">
     var arrayString = $('#info').text();
     var arrayJson = JSON.parse(arrayString);
@@ -80,11 +74,12 @@
 
         for (var item in arrayJson['items']){
 
-            arrayLng[i]= arrayJson['items'][item]['longitude'];
+            arrayLng[item]= arrayJson['items'][item]['longitude'];
 
-            arrayLat[i]= arrayJson['items'][item]['latitude'];
-            coords[i]= [arrayLat[i], arrayLng[i]];
+            arrayLat[item]= arrayJson['items'][item]['latitude'];
+            coords[item]= [arrayLat[item], arrayLng[item]];
             i++;
+
         }
 
 
@@ -128,7 +123,8 @@
     }
 
 </script>
-<script>
+@section('scripts')
+<script  type="text/javascript">
     (function($) {
         $(function() {
             $('input, select').styler({
@@ -137,5 +133,6 @@
         });
     })(jQuery);
 </script>
+@stop
 </body>
 </html>

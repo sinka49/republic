@@ -46,7 +46,7 @@
 
 
             </select>
-            <button class="submit"><img src="images/search.png">Искать</button>
+            <button class="submit"><img src=images/search.png">Искать</button>
 
     </form>
     </div>
@@ -60,14 +60,16 @@
 </main>
 
 <script src="<?=asset('js/jquery.formstyler.min.js')?>"></script>
-<script>
+@section('scripts')
+<script type="text/javascript">
     (function($) {
         $(function() {
             $('input, select').styler({
                 selectSearch: true
             });
         });
-    });
+    })(jQuery);
 </script>
+@stop
 </body>
 </html>

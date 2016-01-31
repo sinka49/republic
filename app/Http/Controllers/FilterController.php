@@ -43,10 +43,9 @@ class FilterController extends Controller
         else{
              $resultDBArray = Place::select('place_id', 'place_name', 'picture')->where('cat_for_app_id','!=', '4')->with('location')->get();
         }
-
-
+          $title =   "Фильтр: ".$rest.", ".$city;
         if (count($resultDBArray) > 0){
-            $resultJSON["success"] = "1";
+            $content["success"] = $title;
             $resultJSON["items"] = $resultDBArray;
             for ($i = 0; $i < count($resultDBArray); $i++) {
                 $lng = $resultJSON["items"][$i]['location']['longitude'];
@@ -59,6 +58,10 @@ class FilterController extends Controller
         }
 
         else  $resultJSON["success"] = "0";
+        $cities = City::select('city_name')->distinct()->get();
+        $rests  = Rest::select('rest_type')->distinct()->get();
+        $content['cities'] =  $cities;
+        $content['rests'] =  $rests;
         $content['dbArray'] =  $resultDBArray;
         $content['JSONarray'] =  json_encode($resultJSON);
         return view('filter', $content);
@@ -98,7 +101,10 @@ class FilterController extends Controller
 
 
         if (count($resultDBArray) > 0){
-            $resultJSON["success"] = "1";
+            $content["success"] = "Культура и отдых";
+            $content["check"][0] = "Где поесть";
+            $content["check"][1] = "Где поспать";
+            $content["check"][2] = "Экскурсии";
             $resultJSON["items"] = $resultDBArray;
             for ($i = 0; $i < count($resultDBArray); $i++) {
                 $lng = $resultJSON["items"][$i]['location']['longitude'];
@@ -111,6 +117,10 @@ class FilterController extends Controller
         }
 
         else  $resultJSON["success"] = "0";
+        $cities = City::select('city_name')->distinct()->get();
+        $rests  = Rest::select('rest_type')->distinct()->get();
+        $content['cities'] =  $cities;
+        $content['rests'] =  $rests;
         $content['dbArray'] =  $resultDBArray;
         $content['JSONarray'] =  json_encode($resultJSON);
         return view('filter', $content);
@@ -150,7 +160,10 @@ class FilterController extends Controller
 
 
         if (count($resultDBArray) > 0){
-            $resultJSON["success"] = "1";
+            $content["success"] = "Где поесть";
+            $content["check"][0] = "Культура и отдых";
+            $content["check"][1] = "Где поспать";
+            $content["check"][2] = "Экскурсии";
             $resultJSON["items"] = $resultDBArray;
             for ($i = 0; $i < count($resultDBArray); $i++) {
                 $lng = $resultJSON["items"][$i]['location']['longitude'];
@@ -163,6 +176,10 @@ class FilterController extends Controller
         }
 
         else  $resultJSON["success"] = "0";
+        $cities = City::select('city_name')->distinct()->get();
+        $rests  = Rest::select('rest_type')->distinct()->get();
+        $content['cities'] =  $cities;
+        $content['rests'] =  $rests;
         $content['dbArray'] =  $resultDBArray;
         $content['JSONarray'] =  json_encode($resultJSON);
         return view('filter', $content);
@@ -202,7 +219,10 @@ class FilterController extends Controller
 
 
         if (count($resultDBArray) > 0){
-            $resultJSON["success"] = "1";
+            $content["success"] = "Где поспать";
+            $content["check"][0] = "Культура и отдых";
+            $content["check"][1] = "Где поесть";
+            $content["check"][2] = "Экскурсии";
             $resultJSON["items"] = $resultDBArray;
             for ($i = 0; $i < count($resultDBArray); $i++) {
                 $lng = $resultJSON["items"][$i]['location']['longitude'];
@@ -215,6 +235,10 @@ class FilterController extends Controller
         }
 
         else  $resultJSON["success"] = "0";
+        $cities = City::select('city_name')->distinct()->get();
+        $rests  = Rest::select('rest_type')->distinct()->get();
+        $content['cities'] =  $cities;
+        $content['rests'] =  $rests;
         $content['dbArray'] =  $resultDBArray;
         $content['JSONarray'] =  json_encode($resultJSON);
         return view('filter', $content);
@@ -252,7 +276,10 @@ class FilterController extends Controller
 
 
         if (count($resultDBArray) > 0){
-            $resultJSON["success"] = "1";
+            $content["success"] = "Экскурсии";
+            $content["check"][0] = "Культура и отдых";
+            $content["check"][1] = "Где поспать";
+            $content["check"][2] = "Где поспать";
             $resultJSON["items"] = $resultDBArray;
             for ($i = 0; $i < count($resultDBArray); $i++) {
                 $lng = $resultJSON["items"][$i]['location']['longitude'];
@@ -265,6 +292,10 @@ class FilterController extends Controller
         }
 
         else  $resultJSON["success"] = "0";
+        $cities = City::select('city_name')->distinct()->get();
+        $rests  = Rest::select('rest_type')->distinct()->get();
+        $content['cities'] =  $cities;
+        $content['rests'] =  $rests;
         $content['dbArray'] =  $resultDBArray;
         $content['JSONarray'] =  json_encode($resultJSON);
         return view('filter', $content);
